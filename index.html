@@ -75,27 +75,32 @@
                         <p><a href="tel:+79530474699">+7 953 04746 99</a></p>
                         <p><a href="mailto:ronginnik@gmail.com">ronginnik@gmail.com</a></p>
                     </div>
-                    <div class="footer__question">
-                        <h3>Быстрый вопрос</h3>
-                     <form onsubmit="sendToTelegram(event)">
-    <input type="email" id="email" placeholder="Ваш email" required>
-    <textarea id="message" placeholder="Ваш вопрос..." required></textarea>
-    <button type="submit">Отправить</button>
-</form>
+                  <div class="footer_question">
+    <h3>Быстрый вопрос</h3>
+    <form class="question-form" onsubmit="sendToTelegram(event)">
+        <input type="email" id="email" placeholder="Ваш email" required>
+        <textarea id="message" placeholder="Ваш вопрос..." required></textarea>
+        <button type="submit">Отправить</button>
+    </form>
+</div>
 
 <script>
     function sendToTelegram(e) {
         e.preventDefault();
-        const botToken = "ваш_токен_бота";
-        const chatId = "ваш_chat_id";
-        const text = `Новое сообщение:\nEmail: ${document.getElementById("email").value}\nСообщение: ${document.getElementById("message").value}`;
-        
+        const botToken = "7894466277:AAF7EWjKfsoJ3bPwwcnbAqrWI8ZK-5aV5r0"; // Ваш токен
+        const chatId = "7894466277"; // Ваш Chat ID (если он другой, укажите верный)
+        const email = document.getElementById("email").value;
+        const message = document.getElementById("message").value;
+        const text = `📩 Новое сообщение с сайта:\n\n✉️ Email: ${email}\n\n💬 Вопрос: ${message}`;
+
         fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`)
-            .then(() => alert("Сообщение отправлено!"))
-            .catch(() => alert("Ошибка!"));
+            .then(() => {
+                alert("Спасибо! Ваше сообщение отправлено.");
+                document.querySelector(".question-form").reset(); // Очистка формы
+            })
+            .catch(() => alert("Ошибка! Попробуйте позже."));
     }
 </script>
-                    </div>
                 </div>
             </div>
         </div>
