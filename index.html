@@ -77,11 +77,24 @@
                     </div>
                     <div class="footer__question">
                         <h3>Быстрый вопрос</h3>
-                        <form class="question-form">
-                            <input type="email" placeholder="Ваш email">
-                            <textarea placeholder="Ваш вопрос..."></textarea>
-                            <button type="submit">Отправить</button>
-                        </form>
+                     <form onsubmit="sendToTelegram(event)">
+    <input type="email" id="email" placeholder="Ваш email" required>
+    <textarea id="message" placeholder="Ваш вопрос..." required></textarea>
+    <button type="submit">Отправить</button>
+</form>
+
+<script>
+    function sendToTelegram(e) {
+        e.preventDefault();
+        const botToken = "ваш_токен_бота";
+        const chatId = "ваш_chat_id";
+        const text = `Новое сообщение:\nEmail: ${document.getElementById("email").value}\nСообщение: ${document.getElementById("message").value}`;
+        
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`)
+            .then(() => alert("Сообщение отправлено!"))
+            .catch(() => alert("Ошибка!"));
+    }
+</script>
                     </div>
                 </div>
             </div>
