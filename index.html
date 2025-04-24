@@ -75,54 +75,69 @@
                         <p><a href="tel:+79530474699">+7 953 04746 99</a></p>
                         <p><a href="mailto:ronginnik@gmail.com">ronginnik@gmail.com</a></p>
                     </div>
-                  <div class="footer_question">
-    <h3>Быстрый вопрос</h3>
-    <form class="question-form" onsubmit="sendToTelegram(event)">
-        <input type="email" id="email" placeholder="Ваш email" required>
-        <textarea id="message" placeholder="Ваш вопрос..." required></textarea>
-        <button type="submit">Отправить</button>
-    </form>
+    <div class="footer">
+  <a name="contacts"></a>
+  <a name="contacts2"></a>
+  <div class="footer__inner">
+    <div class="footer__top">
+      <h1 class="footer__title">Сайт-портфолио</h1>
+    </div>
+    <div class="footer__content">
+      <div class="footer__img">
+        <img class="img_logo" src="img/Component 2.svg" alt="">
+      </div>
+      <div class="footer__contacts">
+        <h3>Контакты</h3>
+        <p><a href="tel:+79530474699">+7 953 04746 99</a></p>
+        <p><a href="mailto:ronginnik@gmail.com">ronginnik@gmail.com</a></p>
+      </div>
+      <div class="footer__question">
+        <h3>Быстрый вопрос</h3>
+        <form id="tg-form" class="question-form">
+          <input type="email" name="email" placeholder="Ваш email" required>
+          <textarea name="message" placeholder="Ваш вопрос..." required></textarea>
+          <button type="submit">Отправить</button>
+        </form>
+        <p id="status"></p>
+      </div>
+    </div>
+  </div>
 </div>
 
-                </div>
-            </div>
-        </div>
-        <script>
-  document.querySelector(".question-form").addEventListener("submit", function (e) {
+<script>
+  document.getElementById('tg-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const email = this.querySelector('input[type="email"]').value;
-    const question = this.querySelector("textarea").value;
+    const token = '7894466277:AAF7EWjKfsoJ3bPwwcnbAqrWI8ZK-5aV5r0'; // ← вставь свой токен от BotFather
+    const chat_id = '1226210300'; // ← вставь свой Telegram user_id
+    const email = this.email.value;
+    const message = this.message.value;
 
-    const message = `📩 Новый вопрос с сайта:\n\n📧 Email: ${email}\n💬 Вопрос: ${question}`;
-
-    const token = "7894466277:AAF7EWjKfsoJ3bPwwcnbAqrWI8ZK-5aV5r0";
-    const chatId = "1226210300";
+    const text = `📬 Новое сообщение с сайта\n\n📧 Email: ${email}\n💬 Сообщение: ${message}`;
 
     fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        chat_id: chatId,
-        text: message
+        chat_id: chat_id,
+        text: text
       })
     })
-    .then(res => {
-      if (res.ok) {
-        alert("✅ Сообщение успешно отправлено!");
-        this.reset();
-      } else {
-        alert("⚠️ Ошибка при отправке сообщения.");
-      }
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('status').textContent = 'Сообщение отправлено!';
+      this.reset();
     })
     .catch(err => {
-      console.error(err);
-      alert("❌ Произошла ошибка при отправке.");
+      document.getElementById('status').textContent = 'Ошибка отправки 😢';
     });
   });
 </script>
 
+                </div>
+            </div>
+        </div>
     </body>
     </html>
